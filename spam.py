@@ -19,7 +19,15 @@ token = json.loads(r)["access_token"]
 session = vk.Session(access_token = token)
 vk = vk.API(session)
 
-foo = ["hi", "2", "3", "fuck", "5"]
+
+try:
+    foo = open('dict.txt', 'r', encoding='utf-8').read().splitlines()
+except IOError:
+    open('dict.txt', 'w', encoding='utf-8')
+    print("Словарь спама отсутствует. Был создан пустой dict.txt")
+
+
+
 
 # print (foo)
 
@@ -30,13 +38,13 @@ r = r[0]["id"]
 
 victim = r
 
-while(True):
+for i in range(0, len(foo)):
 	try:
 		time.sleep(random.randint(1,3) + random.randint(1,4))
-		r = vk.messages.send(peer_id = victim, message = random.choice(foo), v = 5.73)
+		r = vk.messages.send(peer_id = victim, message = str(foo[i]), v = 5.73)
 		print()
 		print("wait...")
 		time.sleep(random.randint(1,2) + random.randint(1,2))
-		print("done  ",random.choice(foo))
+		print("done  ", str(foo[i]))
 	except:
 		pass
